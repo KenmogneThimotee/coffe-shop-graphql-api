@@ -1,0 +1,165 @@
+type Type {
+    id: ID!
+    name: String!
+    description: String!
+}
+
+input TypeInput {
+    id: ID!
+    name: String!
+    description: String!
+}
+
+input UpdateTypeInput {
+    id: ID!
+    name: String!
+    description: String!
+}
+
+type Coffee {
+    id: ID!
+    name: String!
+    description: String!
+    brand: String!
+    price: String!
+    type: String!
+}
+
+input CoffeeInput {
+    id: ID!
+    name: String!
+    description: String!
+    brand: String!
+    price: String!
+    type: String!
+}
+
+input UpdateCoffeeInput {
+    id: ID!
+    name: String!
+    description: String!
+    brand: String!
+    price: String!
+    type: String!
+}
+
+
+type Command {
+    id: ID!
+    coffee: [String]
+}
+
+input CommandInput {
+    id: ID!
+    coffee: [String]
+}
+
+input UpdateCommandInput {
+    id: ID!
+    coffee: [String!]!
+}
+
+
+type Bill {
+    id: ID!
+    totalPrice: Float!
+}
+
+input BillInput {
+    id: ID!
+    totalPrice: Float!
+}
+
+input UpdateBillInput {
+    id: ID!
+    totalPrice: Float!
+}
+
+type Payment {
+    id: ID!
+    bill: String!
+    promoCode: String!
+}
+
+input PaymentInput {
+    id: ID!
+    bill: String!
+    promoCode: String!
+}
+
+input UpdatePaymentInput {
+    id: ID!
+    bill: String!
+    promoCode: String!
+}
+
+type PromoCode {
+    id: ID!
+    name: String!
+    description: String!
+    code: String!
+    reduction: Int!
+}
+
+input PromoCodeInput {
+    id: ID!
+    name: String!
+    description: String!
+    code: String!
+    reduction: Int!
+}
+
+input UpdatePromoCodeInput {
+    id: ID!
+    name: String!
+    description: String!
+    code: String!
+    reduction: Int!
+}
+
+type Query {
+  getCoffeeById(coffeeId: String!): Coffee
+  listCoffees: [Coffee]
+
+  getCommandById(commandId: String!): Command
+  listCommands: [Command]
+
+  getTypeById(typeId: String!): Type
+  listTypes: [Type]
+
+  getBillById(billId: String!): Bill
+  listBills: [Bill]
+
+  getPaymentById(paymentId: String!): Payment
+  listPayments: [Payment]
+
+  getPromoCodeById(promoCodeId: String!): PromoCode
+  listPromoCodes: [PromoCode]
+}
+
+type Mutation {
+
+  createCoffee(coffee: CoffeeInput!): Coffee
+  updateCoffee(coffee: UpdateCoffeeInput!): Coffee
+  deleteCoffee(coffeeId: String!): String
+
+  createType(type: TypeInput!): Type
+  updateType(type: UpdateTypeInput!): Type
+  deleteType(typeId: String!): String
+
+  createCommand(command: CommandInput!): Command
+  updateCommand(command: UpdateCommandInput!): Command
+  deleteCommand(commandId: String!): String
+
+  createBill(bill: BillInput!): Bill
+  updateBill(bill: UpdateBillInput!): Bill
+  deleteBill(billId: String!): String
+
+  createPayment(payment: PaymentInput!): Payment
+  updatePayment(payment: UpdatePaymentInput!): Payment
+  deletePayment(paymentId: String!): String
+
+  createPromoCode(promoCode: PromoCodeInput!): PromoCode
+  updatePromoCode(promoCode: UpdatePromoCodeInput!): PromoCode
+  deletePromoCode(promoCodeId: String!): String
+}

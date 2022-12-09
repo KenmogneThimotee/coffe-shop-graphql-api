@@ -1,3 +1,6 @@
+import getCoffeeById from "../coffee/getCoffeeById";
+import getCommandById from "./getCommandById";
+
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -10,7 +13,37 @@ interface Params {
   ReturnValues: string
 }
 
-async function updateCommand(command: any) {
+async function updateCommand(command: any, username: String, groups: String[]) {
+
+  try {
+    const item = await getCommandById(command.id, username, groups)
+    if( item === undefined){
+        return null
+      }
+    } catch (error) {
+      return null
+  }
+
+  let price = 0
+  for(let coffeeCommand of command.coffee){
+      console.log("coffe", coffeeCommand)
+      try {
+          const item = await getCoffeeById(coffeeCommand.coffee)
+
+          if(item === undefined){
+              return null
+          }else{
+              price += item.price * coffeeCommand.quantity
+          }
+      } catch (error) {
+          console.log("error", error)
+      }
+
+  }
+
+  command.totalPrice = price
+  command.username = username
+
   let params : Params = {
     TableName: process.env.COMMAND_TABLE,
     Key: {

@@ -1,4 +1,4 @@
-type Type {
+type Type @aws_api_key @aws_cognito_user_pools {
     id: ID!
     name: String!
     description: String!
@@ -16,7 +16,7 @@ input UpdateTypeInput {
     description: String!
 }
 
-type Coffee {
+type Coffee @aws_api_key @aws_cognito_user_pools {
     id: ID!
     name: String!
     description: String!
@@ -43,42 +43,59 @@ input UpdateCoffeeInput {
     type: String!
 }
 
+type CaffeeCommand  @aws_api_key @aws_cognito_user_pools {
 
-type Command {
+    coffee: String!
+    quantity: Int!
+
+}
+
+input CaffeeCommandInput {
+
+    coffee: String!
+    quantity: Int!
+
+}
+
+type Command @aws_api_key @aws_cognito_user_pools {
     id: ID!
-    coffee: [String]
+    coffee: [CaffeeCommand]
+    totalPrice: Float
+    username: String!
 }
 
 input CommandInput {
     id: ID!
-    coffee: [String]
+    coffee: [CaffeeCommandInput]!
 }
 
 input UpdateCommandInput {
     id: ID!
-    coffee: [String!]!
+    coffee: [CaffeeCommandInput!]!
 }
 
 
-type Bill {
+type Bill @aws_api_key @aws_cognito_user_pools {
     id: ID!
-    totalPrice: Float!
+    command: String!
+    username: String!
 }
 
 input BillInput {
     id: ID!
-    totalPrice: Float!
+    command: String!
 }
 
 input UpdateBillInput {
     id: ID!
-    totalPrice: Float!
+    command: String!
 }
 
-type Payment {
+type Payment @aws_api_key @aws_cognito_user_pools {
     id: ID!
     bill: String!
     promoCode: String!
+    username: String
 }
 
 input PaymentInput {
@@ -93,7 +110,7 @@ input UpdatePaymentInput {
     promoCode: String!
 }
 
-type PromoCode {
+type PromoCode @aws_api_key @aws_cognito_user_pools {
     id: ID!
     name: String!
     description: String!
@@ -117,49 +134,97 @@ input UpdatePromoCodeInput {
     reduction: Int!
 }
 
-type Query {
+type Query  {
   getCoffeeById(coffeeId: String!): Coffee
+  @aws_api_key @aws_cognito_user_pools
+
   listCoffees: [Coffee]
+  @aws_api_key @aws_cognito_user_pools
 
   getCommandById(commandId: String!): Command
+  @aws_api_key @aws_cognito_user_pools
+
   listCommands: [Command]
+  @aws_api_key @aws_cognito_user_pools
 
   getTypeById(typeId: String!): Type
+  @aws_api_key @aws_cognito_user_pools
+
   listTypes: [Type]
+  @aws_api_key @aws_cognito_user_pools
 
   getBillById(billId: String!): Bill
+  @aws_api_key @aws_cognito_user_pools
+
   listBills: [Bill]
+  @aws_api_key @aws_cognito_user_pools
 
   getPaymentById(paymentId: String!): Payment
+  @aws_api_key @aws_cognito_user_pools
+
   listPayments: [Payment]
+  @aws_api_key @aws_cognito_user_pools
 
   getPromoCodeById(promoCodeId: String!): PromoCode
+  @aws_api_key @aws_cognito_user_pools
+
   listPromoCodes: [PromoCode]
+  @aws_api_key @aws_cognito_user_pools
 }
 
 type Mutation {
 
   createCoffee(coffee: CoffeeInput!): Coffee
+  @aws_cognito_user_pools(cognito_groups: ["admin"])
+
   updateCoffee(coffee: UpdateCoffeeInput!): Coffee
+  @aws_cognito_user_pools(cognito_groups: ["admin"])
+
   deleteCoffee(coffeeId: String!): String
+  @aws_cognito_user_pools(cognito_groups: ["admin"])
 
   createType(type: TypeInput!): Type
+  @aws_cognito_user_pools(cognito_groups: ["admin"])
+
   updateType(type: UpdateTypeInput!): Type
+  @aws_cognito_user_pools(cognito_groups: ["admin"])
+
   deleteType(typeId: String!): String
+  @aws_cognito_user_pools(cognito_groups: ["admin"])
 
   createCommand(command: CommandInput!): Command
+  @aws_cognito_user_pools
+
   updateCommand(command: UpdateCommandInput!): Command
+  @aws_cognito_user_pools
+
   deleteCommand(commandId: String!): String
+  @aws_cognito_user_pools
 
   createBill(bill: BillInput!): Bill
+  @aws_cognito_user_pools
+
   updateBill(bill: UpdateBillInput!): Bill
+  @aws_cognito_user_pools
+
   deleteBill(billId: String!): String
+  @aws_cognito_user_pools
 
   createPayment(payment: PaymentInput!): Payment
+  @aws_cognito_user_pools
+
   updatePayment(payment: UpdatePaymentInput!): Payment
+  @aws_cognito_user_pools
+
   deletePayment(paymentId: String!): String
+  @aws_cognito_user_pools
 
   createPromoCode(promoCode: PromoCodeInput!): PromoCode
+  @aws_cognito_user_pools
+
   updatePromoCode(promoCode: UpdatePromoCodeInput!): PromoCode
+  @aws_cognito_user_pools
+
   deletePromoCode(promoCodeId: String!): String
+  @aws_cognito_user_pools
 }

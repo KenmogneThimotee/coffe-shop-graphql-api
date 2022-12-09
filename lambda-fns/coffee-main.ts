@@ -39,6 +39,7 @@ import getTypeById from './type/getTypeById';
 import listTypes from './type/listTypes';
 import updateType from './type/updateType';
 import Type = require('./type/type');
+import { Identity } from 'aws-cdk-lib/aws-ses';
 
 type AppSyncEvent = {
    info: {
@@ -62,10 +63,19 @@ type AppSyncEvent = {
 
      typeId: string,
      type: Type
+  },
+  identity: {
+    username: string,
+    claims: {
+      [key: string]: string[]
+    },
+    groups: string[],
   }
 }
 
-exports.handler = async (event:AppSyncEvent) => {
+exports.handler = async (event:AppSyncEvent, context: any) => {
+    console.log(context)
+    console.log(event)
     switch (event.info.fieldName) {
         case "getCoffeeById":
             return await getCoffeeById(event.arguments.coffeeId);
@@ -79,32 +89,32 @@ exports.handler = async (event:AppSyncEvent) => {
             return await updateCoffee(event.arguments.coffee);
         
         case "getBillById":
-            return await getBillById(event.arguments.billId);
+            return await getBillById(event.arguments.billId, event.identity.username, event.identity.groups);
         case "createBill":
-            return await createBill(event.arguments.bill);
+            return await createBill(event.arguments.bill, event.identity.username);
         case "listBills":
             return await listBills();
         case "deleteBill":
-            return await deleteBill(event.arguments.billId);
+            return await deleteBill(event.arguments.billId, event.identity.username, event.identity.groups);
         case "updateBill":
-            return await updateBill(event.arguments.bill);
+            return await updateBill(event.arguments.bill, event.identity.username, event.identity.groups);
 
         case "getCommandById":
-            return await getCommandById(event.arguments.commandId);
+            return await getCommandById(event.arguments.commandId, event.identity.username, event.identity.groups);
         case "createCommand":
-            return await createCommand(event.arguments.command);
+            return await createCommand(event.arguments.command, event.identity.username);
         case "listCommands":
             return await listCommands();
         case "deleteCommand":
-            return await deleteCommand(event.arguments.commandId);
+            return await deleteCommand(event.arguments.commandId, event.identity.username, event.identity.groups);
         case "updateCommand":
-            return await updateCommand(event.arguments.command);
+            return await updateCommand(event.arguments.command, event.identity.username, event.identity.groups);
 
         
         case "getPaymentById":
-            return await getPaymentById(event.arguments.paymentId);
+            return await getPaymentById(event.arguments.paymentId, event.identity.username, event.identity.groups);
         case "createPayment":
-            return await createPayment(event.arguments.payment);
+            return await createPayment(event.arguments.payment, event.identity.username);
         case "listPayments":
             return await listPayments();
         case "deletePayment":

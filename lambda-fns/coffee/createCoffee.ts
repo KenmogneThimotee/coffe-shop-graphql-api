@@ -9,18 +9,26 @@ async function createCoffee(coffee: Coffee) {
         Item: coffee
     }
 
+    const paramsType = {
+        TableName: process.env.TYPE_TABLE,
+        Key: { id: coffee.type }
+    }
     try {
-        await getTypeById(coffee.type)
+        const { Item } = await docClient.get(paramsType).promise()
+        console.log(Item)
+        if(Item === undefined) return null
     } catch (err) {
+        console.log('DynamoDB error: ', err)
         return null
     }
+
 
     try {
         await docClient.put(params).promise();
         return coffee;
     } catch (err) {
         console.log('DynamoDB error: ', err);
-        return null;
+        return null
     }
 }
 

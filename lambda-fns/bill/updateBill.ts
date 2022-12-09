@@ -1,3 +1,5 @@
+import getBillById from "./getBillById";
+
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -10,7 +12,17 @@ interface Params {
   ReturnValues: string
 }
 
-async function updateBill(bill: any) {
+async function updateBill(bill: any, username: String, groups: String[]) {
+  
+  try {
+    const item = await getBillById(bill.id, username, groups)
+    if( item === undefined){
+        return null
+      }
+  } catch (error) {
+      return null
+  }
+
   let params : Params = {
     TableName: process.env.BILL_TABLE,
     Key: {

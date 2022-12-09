@@ -1,7 +1,18 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
+import getCommandById from "./getCommandById";
 
-async function deleteCommand(commandId: String) {
+async function deleteCommand(commandId: String, username: String, groups: String[]) {
+
+    try {
+        const item = await getCommandById(commandId, username, groups)
+        if( item === undefined){
+            return null
+          }
+        } catch (error) {
+          return null
+    }
+
     const params = {
         TableName: process.env.COMMAND_TABLE,
         Key: {

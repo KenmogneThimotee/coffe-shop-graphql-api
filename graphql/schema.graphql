@@ -1,4 +1,4 @@
-type Type @aws_api_key @aws_cognito_user_pools {
+type Type @aws_cognito_user_pools {
     id: ID!
     name: String!
     description: String!
@@ -16,7 +16,7 @@ input UpdateTypeInput {
     description: String!
 }
 
-type Coffee @aws_api_key @aws_cognito_user_pools {
+type Coffee @aws_cognito_user_pools {
     id: ID!
     name: String!
     description: String!
@@ -43,7 +43,7 @@ input UpdateCoffeeInput {
     type: String!
 }
 
-type CaffeeCommand  @aws_api_key @aws_cognito_user_pools {
+type CaffeeCommand  @aws_cognito_user_pools {
 
     coffee: String!
     quantity: Int!
@@ -57,7 +57,7 @@ input CaffeeCommandInput {
 
 }
 
-type Command @aws_api_key @aws_cognito_user_pools {
+type Command @aws_cognito_user_pools {
     id: ID!
     coffee: [CaffeeCommand]
     totalPrice: Float
@@ -75,7 +75,7 @@ input UpdateCommandInput {
 }
 
 
-type Bill @aws_api_key @aws_cognito_user_pools {
+type Bill @aws_cognito_user_pools {
     id: ID!
     command: String!
     username: String!
@@ -91,7 +91,7 @@ input UpdateBillInput {
     command: String!
 }
 
-type Payment @aws_api_key @aws_cognito_user_pools {
+type Payment @aws_cognito_user_pools {
     id: ID!
     bill: String!
     username: String
@@ -109,34 +109,34 @@ input UpdatePaymentInput {
 
 type Query  {
   getCoffeeById(coffeeId: String!): Coffee
-  @aws_api_key @aws_cognito_user_pools
+  @aws_cognito_user_pools
 
   listCoffees: [Coffee]
-  @aws_api_key @aws_cognito_user_pools
+  @aws_cognito_user_pools
 
   getOrderById(commandId: String!): Command
-  @aws_api_key @aws_cognito_user_pools
+  @aws_cognito_user_pools
 
   listOrders: [Command]
-  @aws_api_key @aws_cognito_user_pools
+  @aws_cognito_user_pools
 
   getTypeById(typeId: String!): Type
-  @aws_api_key @aws_cognito_user_pools
+  @aws_cognito_user_pools
 
   listTypes: [Type]
-  @aws_api_key @aws_cognito_user_pools
+  @aws_cognito_user_pools
 
   getBillById(billId: String!): Bill
-  @aws_api_key @aws_cognito_user_pools
+  @aws_cognito_user_pools
 
   listBills: [Bill]
-  @aws_api_key @aws_cognito_user_pools
+  @aws_cognito_user_pools
 
   getPaymentById(paymentId: String!): Payment
-  @aws_api_key @aws_cognito_user_pools
+  @aws_cognito_user_pools
 
   listPayments: [Payment]
-  @aws_api_key @aws_cognito_user_pools
+  @aws_cognito_user_pools
 
 }
 
@@ -185,6 +185,6 @@ type Mutation {
   @aws_cognito_user_pools
 
   deletePayment(paymentId: String!): String
-  @aws_cognito_user_pools
+  @aws_cognito_user_pools(cognito_groups: ["admin"])
 
 }

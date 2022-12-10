@@ -6,8 +6,10 @@ async function getOrderById(orderId: String, username: String, groups: String[])
         TableName: process.env.ORDER_TABLE,
         Key: { id: orderId }
     }
+    console.log("test getOrder 1")
     try {
         const { Item } = await docClient.get(params).promise()
+        console.log("test getOrder 1", Item)
         if(Item.username !== username){
             if( groups.includes('admin') ){
                 return Item

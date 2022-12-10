@@ -16,6 +16,11 @@ function createBillInfra(construct: cdk.Stack, lambdaDs: LambdaDataSource, lambd
     });
 
     lambdaDs.createResolver({
+        typeName: "Query",
+        fieldName: "getBillByUsername"
+    });
+
+    lambdaDs.createResolver({
         typeName: "Mutation",
         fieldName: "createBill"
       });

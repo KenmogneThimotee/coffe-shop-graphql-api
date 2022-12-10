@@ -13,9 +13,11 @@ async function getOrderByUsername(username: String) {
         },
     }
     try {
-        const { Item } = await docClient.scan(params).promise()
+        let orders : any;
+        orders = await docClient.scan(params).promise()
+        console.log('orders', orders)
+        return orders.Items
         
-        return Item
     } catch (err) {
         console.log('DynamoDB error: ', err)
     }

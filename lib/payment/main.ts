@@ -17,6 +17,11 @@ function createPaymentInfra(construct: cdk.Stack, lambdaDs: LambdaDataSource, la
     });
 
     lambdaDs.createResolver({
+        typeName: "Query",
+        fieldName: "getPaymentByUsername"
+    });
+
+    lambdaDs.createResolver({
         typeName: "Mutation",
         fieldName: "createPayment"
       });

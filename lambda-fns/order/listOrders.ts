@@ -3,7 +3,7 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 async function listCommands() {
     const params = {
-        TableName: process.env.COMMAND_TABLE,
+        TableName: process.env.ORDER_TABLE,
     }
     try {
         const data = await docClient.scan(params).promise()

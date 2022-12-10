@@ -57,9 +57,23 @@ input CaffeeOrderInput {
 
 }
 
+type CaffeeOrderOutput {
+
+    coffee: String!
+    quantity: Int!
+
+}
+
 type Order @aws_cognito_user_pools {
     id: ID!
     coffee: [CaffeeOrder]
+    totalPrice: Float
+    username: String!
+}
+
+type OrderOutput {
+    id: ID!
+    coffee: [CaffeeOrderOutput]
     totalPrice: Float
     username: String!
 }
@@ -114,10 +128,10 @@ type Query  {
   listCoffees: [Coffee]
   @aws_cognito_user_pools
 
-  getOrderById(commandId: String!): Order
+  getOrderById(orderId: String!): Order
   @aws_cognito_user_pools
 
-  getOrderByUsername(username: String!): Order
+  getOrderByUsername(username: String!): [Order]
   @aws_cognito_user_pools
 
   listOrders: [Order]
@@ -169,13 +183,13 @@ type Mutation {
   deleteType(typeId: String!): String
   @aws_cognito_user_pools(cognito_groups: ["admin"])
 
-  createOrder(command: OrderInput!): Order
+  createOrder(order: OrderInput!): Order
   @aws_cognito_user_pools
 
-  updateOrder(command: UpdateOrderInput!): Order
+  updateOrder(order: UpdateOrderInput!): Order
   @aws_cognito_user_pools
 
-  deleteOrder(commandId: String!): String
+  deleteOrder(orderId: String!): String
   @aws_cognito_user_pools
 
   createBill(bill: BillInput!): Bill

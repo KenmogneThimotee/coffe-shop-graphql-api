@@ -16,18 +16,23 @@ function createOrderInfra(construct: cdk.Stack, lambdaDs: LambdaDataSource, lamb
     });
 
     lambdaDs.createResolver({
-        typeName: "Mutation",
-        fieldName: "createCommand"
-      });
-  
-    lambdaDs.createResolver({
-        typeName: "Mutation",
-        fieldName: "updateCommand"
+        typeName: "Query",
+        fieldName: "getOrderByUsername"
     });
 
     lambdaDs.createResolver({
         typeName: "Mutation",
-        fieldName: "deleteCommand"
+        fieldName: "createOrder"
+      });
+  
+    lambdaDs.createResolver({
+        typeName: "Mutation",
+        fieldName: "updateOrder"
+    });
+
+    lambdaDs.createResolver({
+        typeName: "Mutation",
+        fieldName: "deleteOrder"
     });
 
     const commandTable = new ddb.Table(construct, 'OrderTable', {

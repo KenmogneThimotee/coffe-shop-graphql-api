@@ -12,12 +12,12 @@ import listBills from './bill/listBills';
 import updateBill from './bill/updateBill';
 import Bill = require('./bill/bill');
 
-import createCommand from './command/createCommand';
-import deleteCommand from './command/deleteCommand';
-import getCommandById from './command/getCommandById';
-import listCommands from './command/listCommands';
-import updateCommand from './command/updateCommand';
-import Command = require('./command/command');
+import createOrder from './order/createOrder';
+import deleteOrder from './order/deleteOrder';
+import getOrderById from './order/getOrderById';
+import listOrders from './order/listOrders';
+import updateOrder from './order/updateOrder';
+import Order = require('./order/order');
 
 import createPayment from './payment/createPayment';
 import deletePayment from './payment/deletePayment';
@@ -26,12 +26,6 @@ import listPayments from './payment/listPayments';
 import updatePayment from './payment/updatePayment';
 import Payment = require('./payment/payment');
 
-import createPromoCode from './promo-code/createPromoCode';
-import deletePromoCode from './promo-code/deletePromoCode';
-import getPromoCodeById from './promo-code/getPromoCodeById';
-import listPromoCodes from './promo-code/listPromoCodes';
-import updatePromoCode from './promo-code/updatePromoCode';
-import PromoCode = require('./promo-code/promo-code');
 
 import createType from './type/createType';
 import deleteType from './type/deleteType';
@@ -52,14 +46,11 @@ type AppSyncEvent = {
      billId: string,
      bill: Bill,
 
-     commandId: string,
-     command: Command,
+     orderId: string,
+     order: Order,
 
      paymentId: string,
      payment: Payment,
-
-     promoCodeId: string,
-     promoCode: PromoCode,
 
      typeId: string,
      type: Type
@@ -99,16 +90,16 @@ exports.handler = async (event:AppSyncEvent, context: any) => {
         case "updateBill":
             return await updateBill(event.arguments.bill, event.identity.username, event.identity.groups);
 
-        case "getCommandById":
-            return await getCommandById(event.arguments.commandId, event.identity.username, event.identity.groups);
-        case "createCommand":
-            return await createCommand(event.arguments.command, event.identity.username);
-        case "listCommands":
-            return await listCommands();
-        case "deleteCommand":
-            return await deleteCommand(event.arguments.commandId, event.identity.username, event.identity.groups);
-        case "updateCommand":
-            return await updateCommand(event.arguments.command, event.identity.username, event.identity.groups);
+        case "getOrderById":
+            return await getOrderById(event.arguments.orderId, event.identity.username, event.identity.groups);
+        case "createOrder":
+            return await createOrder(event.arguments.order, event.identity.username);
+        case "listOrders":
+            return await listOrders();
+        case "deleteOrder":
+            return await deleteOrder(event.arguments.orderId, event.identity.username, event.identity.groups);
+        case "updateOrder":
+            return await updateOrder(event.arguments.order, event.identity.username, event.identity.groups);
 
         
         case "getPaymentById":
@@ -121,18 +112,6 @@ exports.handler = async (event:AppSyncEvent, context: any) => {
             return await deletePayment(event.arguments.paymentId);
         case "updatePayment":
             return await updatePayment(event.arguments.payment);
-
-        case "getPromoCodeById":
-            return await getPromoCodeById(event.arguments.promoCodeId);
-        case "createPromoCode":
-            return await createPromoCode(event.arguments.promoCode);
-        case "listPromoCodes":
-            return await listPromoCodes();
-        case "deletePromoCode":
-            return await deletePromoCode(event.arguments.promoCodeId);
-        case "updatePromoCode":
-            return await updatePromoCode(event.arguments.promoCode);
-        
         
         case "getTypeById":
             return await getTypeById(event.arguments.typeId);

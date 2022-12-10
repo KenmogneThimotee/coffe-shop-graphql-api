@@ -1,13 +1,13 @@
-interface CaffeeCommand {
+interface CaffeeOrder {
     coffee: String;
     quantity: number;
 }
 
-interface Command  {
+interface Order  {
     id: String;
-    coffee: Array<CaffeeCommand>;
+    coffee: Array<CaffeeOrder>;
     totalPrice: number;
     username: String
 }
 
-export = Command
+export = Order

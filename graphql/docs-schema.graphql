@@ -1,4 +1,4 @@
-type Type @aws_api_key @aws_cognito_user_pools {
+type Type {
     id: ID!
     name: String!
     description: String!
@@ -16,7 +16,7 @@ input UpdateTypeInput {
     description: String!
 }
 
-type Coffee @aws_api_key @aws_cognito_user_pools {
+type Coffee {
     id: ID!
     name: String!
     description: String!
@@ -43,7 +43,7 @@ input UpdateCoffeeInput {
     type: String!
 }
 
-type CaffeeCommand  @aws_api_key @aws_cognito_user_pools {
+type CaffeeCommand {
 
     coffee: String!
     quantity: Int!
@@ -57,7 +57,7 @@ input CaffeeCommandInput {
 
 }
 
-type Command @aws_api_key @aws_cognito_user_pools {
+type Command {
     id: ID!
     coffee: [CaffeeCommand]
     totalPrice: Float
@@ -75,7 +75,7 @@ input UpdateCommandInput {
 }
 
 
-type Bill @aws_api_key @aws_cognito_user_pools {
+type Bill {
     id: ID!
     command: String!
     username: String!
@@ -91,7 +91,7 @@ input UpdateBillInput {
     command: String!
 }
 
-type Payment @aws_api_key @aws_cognito_user_pools {
+type Payment {
     id: ID!
     bill: String!
     username: String
@@ -109,82 +109,82 @@ input UpdatePaymentInput {
 
 type Query  {
   getCoffeeById(coffeeId: String!): Coffee
-  @aws_api_key @aws_cognito_user_pools
+  
 
   listCoffees: [Coffee]
-  @aws_api_key @aws_cognito_user_pools
+  
 
   getOrderById(commandId: String!): Command
-  @aws_api_key @aws_cognito_user_pools
+  
 
   listOrders: [Command]
-  @aws_api_key @aws_cognito_user_pools
+  
 
   getTypeById(typeId: String!): Type
-  @aws_api_key @aws_cognito_user_pools
+  
 
   listTypes: [Type]
-  @aws_api_key @aws_cognito_user_pools
+  
 
   getBillById(billId: String!): Bill
-  @aws_api_key @aws_cognito_user_pools
+  
 
   listBills: [Bill]
-  @aws_api_key @aws_cognito_user_pools
+  
 
   getPaymentById(paymentId: String!): Payment
-  @aws_api_key @aws_cognito_user_pools
+  
 
   listPayments: [Payment]
-  @aws_api_key @aws_cognito_user_pools
+  
 
 }
 
 type Mutation {
 
   createCoffee(coffee: CoffeeInput!): Coffee
-  @aws_cognito_user_pools(cognito_groups: ["admin"])
+  
 
   updateCoffee(coffee: UpdateCoffeeInput!): Coffee
-  @aws_cognito_user_pools(cognito_groups: ["admin"])
+  
 
   deleteCoffee(coffeeId: String!): String
-  @aws_cognito_user_pools(cognito_groups: ["admin"])
+  
 
   createType(type: TypeInput!): Type
-  @aws_cognito_user_pools(cognito_groups: ["admin"])
+  
 
   updateType(type: UpdateTypeInput!): Type
-  @aws_cognito_user_pools(cognito_groups: ["admin"])
+  
 
   deleteType(typeId: String!): String
-  @aws_cognito_user_pools(cognito_groups: ["admin"])
+  
 
   createCommand(command: CommandInput!): Command
-  @aws_cognito_user_pools
+  
 
   updateCommand(command: UpdateCommandInput!): Command
-  @aws_cognito_user_pools
+  
 
   deleteCommand(commandId: String!): String
-  @aws_cognito_user_pools
+  
 
   createBill(bill: BillInput!): Bill
-  @aws_cognito_user_pools
+  
 
   updateBill(bill: UpdateBillInput!): Bill
-  @aws_cognito_user_pools
+  
 
   deleteBill(billId: String!): String
-  @aws_cognito_user_pools
+  
 
   createPayment(payment: PaymentInput!): Payment
-  @aws_cognito_user_pools
+  
 
   updatePayment(payment: UpdatePaymentInput!): Payment
-  @aws_cognito_user_pools
+  
 
   deletePayment(paymentId: String!): String
-  @aws_cognito_user_pools
+  
 
 }

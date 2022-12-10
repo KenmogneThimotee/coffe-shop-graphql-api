@@ -1,13 +1,13 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
-import getCommandById from '../command/getCommandById';
+import getOrderById from '../order/getOrderById';
 import Bill = require('./bill');
 
 async function createBill(bill: Bill, username: String) {
 
     bill.username = username
 
-    const command = await getCommandById(bill.command, username, ['admin'])
+    const command = await getOrderById(bill.command, username, ['admin'])
     if(command === undefined){
         return null
     }

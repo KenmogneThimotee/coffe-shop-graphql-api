@@ -43,12 +43,10 @@ We have two type of users :
 
 ## Project Struture
 ├── bin						 
-├── cdk.out
 ├── docs
 ├── graphql
 ├── lambda-fns
 ├── lib
-├── node_modules
 └── test
 
 ## APIs documentation

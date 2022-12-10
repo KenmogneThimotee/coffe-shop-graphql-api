@@ -43,35 +43,35 @@ input UpdateCoffeeInput {
     type: String!
 }
 
-type CaffeeCommand  @aws_cognito_user_pools {
+type CaffeeOrder  @aws_cognito_user_pools {
 
     coffee: String!
     quantity: Int!
 
 }
 
-input CaffeeCommandInput {
+input CaffeeOrderInput {
 
     coffee: String!
     quantity: Int!
 
 }
 
-type Command @aws_cognito_user_pools {
+type Order @aws_cognito_user_pools {
     id: ID!
-    coffee: [CaffeeCommand]
+    coffee: [CaffeeOrder]
     totalPrice: Float
     username: String!
 }
 
-input CommandInput {
+input OrderInput {
     id: ID!
-    coffee: [CaffeeCommandInput]!
+    coffee: [CaffeeOrderInput]!
 }
 
-input UpdateCommandInput {
+input UpdateOrderInput {
     id: ID!
-    coffee: [CaffeeCommandInput!]!
+    coffee: [CaffeeOrderInput!]!
 }
 
 
@@ -114,10 +114,13 @@ type Query  {
   listCoffees: [Coffee]
   @aws_cognito_user_pools
 
-  getOrderById(commandId: String!): Command
+  getOrderById(commandId: String!): Order
   @aws_cognito_user_pools
 
-  listOrders: [Command]
+  getOrderByUsername(username: String!): Order
+  @aws_cognito_user_pools
+
+  listOrders: [Order]
   @aws_cognito_user_pools
 
   getTypeById(typeId: String!): Type
@@ -129,10 +132,16 @@ type Query  {
   getBillById(billId: String!): Bill
   @aws_cognito_user_pools
 
+  getBillByUsername(username: String!): Bill
+  @aws_cognito_user_pools
+
   listBills: [Bill]
   @aws_cognito_user_pools
 
   getPaymentById(paymentId: String!): Payment
+  @aws_cognito_user_pools
+
+  getPaymentByUsername(username: String!): Payment
   @aws_cognito_user_pools
 
   listPayments: [Payment]
@@ -160,13 +169,13 @@ type Mutation {
   deleteType(typeId: String!): String
   @aws_cognito_user_pools(cognito_groups: ["admin"])
 
-  createCommand(command: CommandInput!): Command
+  createOrder(command: OrderInput!): Order
   @aws_cognito_user_pools
 
-  updateCommand(command: UpdateCommandInput!): Command
+  updateOrder(command: UpdateOrderInput!): Order
   @aws_cognito_user_pools
 
-  deleteCommand(commandId: String!): String
+  deleteOrder(commandId: String!): String
   @aws_cognito_user_pools
 
   createBill(bill: BillInput!): Bill

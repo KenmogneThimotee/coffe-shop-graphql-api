@@ -1,0 +1,24 @@
+const AWS = require('aws-sdk');
+const docClient = new AWS.DynamoDB.DocumentClient();
+
+async function getOrderByUsername(username: String) {
+    const params = {
+        TableName: process.env.ORDER_TABLE,
+        FilterExpression: '#username = :username',
+        ExpressionAttributeNames: {
+            '#username': 'username',
+        },
+        ExpressionAttributeValues: {
+            ':username': username,
+        },
+    }
+    try {
+        const { Item } = await docClient.scan(params).promise()
+        
+        return Item
+    } catch (err) {
+        console.log('DynamoDB error: ', err)
+    }
+}
+
+export default getOrderByUsername

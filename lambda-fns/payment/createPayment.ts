@@ -1,11 +1,8 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import Payment = require('./payment');
-import getBillById from '../bill/getBillById';
 
 async function createPayment(payment: Payment, username: String) {
-    let promoCode : any
-    let bill : any
 
     const params = {
         TableName: process.env.PAYMENT_TABLE,

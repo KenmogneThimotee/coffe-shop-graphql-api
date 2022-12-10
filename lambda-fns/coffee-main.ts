@@ -8,6 +8,7 @@ import Coffee = require('./coffee/coffee');
 import createBill from './bill/createBill';
 import deleteBill from './bill/deleteBill';
 import getBillById from './bill/getBillById';
+import getBillByUsername from './bill/getBillByUsername';
 import listBills from './bill/listBills';
 import updateBill from './bill/updateBill';
 import Bill = require('./bill/bill');
@@ -15,6 +16,7 @@ import Bill = require('./bill/bill');
 import createOrder from './order/createOrder';
 import deleteOrder from './order/deleteOrder';
 import getOrderById from './order/getOrderById';
+import getOrderByUsername from './order/getOrderByUsername';
 import listOrders from './order/listOrders';
 import updateOrder from './order/updateOrder';
 import Order = require('./order/order');
@@ -33,7 +35,6 @@ import getTypeById from './type/getTypeById';
 import listTypes from './type/listTypes';
 import updateType from './type/updateType';
 import Type = require('./type/type');
-import { Identity } from 'aws-cdk-lib/aws-ses';
 
 type AppSyncEvent = {
    info: {
@@ -53,7 +54,9 @@ type AppSyncEvent = {
      payment: Payment,
 
      typeId: string,
-     type: Type
+     type: Type,
+
+     username: String
   },
   identity: {
     username: string,
@@ -81,6 +84,8 @@ exports.handler = async (event:AppSyncEvent, context: any) => {
         
         case "getBillById":
             return await getBillById(event.arguments.billId, event.identity.username, event.identity.groups);
+        case "getBillByUsername":
+            return await getBillByUsername(event.identity.username);
         case "createBill":
             return await createBill(event.arguments.bill, event.identity.username);
         case "listBills":
@@ -92,6 +97,8 @@ exports.handler = async (event:AppSyncEvent, context: any) => {
 
         case "getOrderById":
             return await getOrderById(event.arguments.orderId, event.identity.username, event.identity.groups);
+        case "getOrderByUsername":
+            return await getOrderByUsername(event.identity.username);
         case "createOrder":
             return await createOrder(event.arguments.order, event.identity.username);
         case "listOrders":
@@ -104,6 +111,8 @@ exports.handler = async (event:AppSyncEvent, context: any) => {
         
         case "getPaymentById":
             return await getPaymentById(event.arguments.paymentId, event.identity.username, event.identity.groups);
+        case "getPaymentByUsername":
+            return await getPaymentByUsername(event.identity.username);   
         case "createPayment":
             return await createPayment(event.arguments.payment, event.identity.username);
         case "listPayments":

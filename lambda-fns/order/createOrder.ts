@@ -1,21 +1,21 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import getCoffeeById from '../coffee/getCoffeeById';
-import Command = require('./command');
+import Order = require('./order');
 
-async function createCommand(command: Command, username: String) {
+async function createOrder(order: Order, username: String) {
 
-   console.log("command", command)
+   console.log("order", order)
    let price = 0
-    for(let coffeeCommand of command.coffee){
-        console.log("coffe", coffeeCommand)
+    for(let coffeeOrder of order.coffee){
+        console.log("coffe", coffeeOrder)
         try {
-            const item = await getCoffeeById(coffeeCommand.coffee)
+            const item = await getCoffeeById(coffeeOrder.coffee)
 
             if(item === undefined){
                 return null
             }else{
-                price += item.price * coffeeCommand.quantity
+                price += item.price * coffeeOrder.quantity
             }
         } catch (error) {
             console.log("error", error)
@@ -23,22 +23,22 @@ async function createCommand(command: Command, username: String) {
 
     }
 
-    command.totalPrice = price
-    command.username = username
+    order.totalPrice = price
+    order.username = username
    
     console.log("end of user")
-    console.log("egg", command)
+    console.log("egg", order)
     const params = {
-        TableName: process.env.COMMAND_TABLE,
-        Item: command
+        TableName: process.env.ORDER_TABLE,
+        Item: order
     }
     try {
         await docClient.put(params).promise();
-        return command;
+        return order;
     } catch (err) {
         console.log('DynamoDB error: ', err);
         return null;
     }
 }
 
-export default createCommand;
+export default createOrder;

@@ -1,11 +1,11 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
-import getCommandById from "./getCommandById";
+import getOrderById from "./getOrderById";
 
-async function deleteCommand(commandId: String, username: String, groups: String[]) {
+async function deleteOrder(orderId: String, username: String, groups: String[]) {
 
     try {
-        const item = await getCommandById(commandId, username, groups)
+        const item = await getOrderById(orderId, username, groups)
         if( item === undefined){
             return null
           }
@@ -14,18 +14,18 @@ async function deleteCommand(commandId: String, username: String, groups: String
     }
 
     const params = {
-        TableName: process.env.COMMAND_TABLE,
+        TableName: process.env.ORDER_TABLE,
         Key: {
-          id: commandId
+          id: orderId
         }
     }
     try {
         await docClient.delete(params).promise()
-        return commandId
+        return orderId
     } catch (err) {
         console.log('DynamoDB error: ', err)
         return null
     }
 }
 
-export default deleteCommand;
+export default deleteOrder;

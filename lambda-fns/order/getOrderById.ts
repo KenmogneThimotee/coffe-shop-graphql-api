@@ -1,10 +1,10 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-async function getCommandById(commandId: String, username: String, groups: String[]) {
+async function getOrderById(orderId: String, username: String, groups: String[]) {
     const params = {
-        TableName: process.env.COMMAND_TABLE,
-        Key: { id: commandId }
+        TableName: process.env.ORDER_TABLE,
+        Key: { id: orderId }
     }
     try {
         const { Item } = await docClient.get(params).promise()
@@ -21,4 +21,4 @@ async function getCommandById(commandId: String, username: String, groups: Strin
     }
 }
 
-export default getCommandById
+export default getOrderById

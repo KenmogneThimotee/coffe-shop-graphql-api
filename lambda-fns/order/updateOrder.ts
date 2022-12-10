@@ -1,5 +1,5 @@
 import getCoffeeById from "../coffee/getCoffeeById";
-import getCommandById from "./getCommandById";
+import getOrderById from "./getOrderById";
 
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
@@ -13,10 +13,10 @@ interface Params {
   ReturnValues: string
 }
 
-async function updateCommand(command: any, username: String, groups: String[]) {
+async function updateOrder(order: any, username: String, groups: String[]) {
 
   try {
-    const item = await getCommandById(command.id, username, groups)
+    const item = await getOrderById(order.id, username, groups)
     if( item === undefined){
         return null
       }
@@ -25,15 +25,15 @@ async function updateCommand(command: any, username: String, groups: String[]) {
   }
 
   let price = 0
-  for(let coffeeCommand of command.coffee){
-      console.log("coffe", coffeeCommand)
+  for(let coffeeOrder of order.coffee){
+      console.log("coffe", coffeeOrder)
       try {
-          const item = await getCoffeeById(coffeeCommand.coffee)
+          const item = await getCoffeeById(coffeeOrder.coffee)
 
           if(item === undefined){
               return null
           }else{
-              price += item.price * coffeeCommand.quantity
+              price += item.price * coffeeOrder.quantity
           }
       } catch (error) {
           console.log("error", error)
@@ -41,13 +41,13 @@ async function updateCommand(command: any, username: String, groups: String[]) {
 
   }
 
-  command.totalPrice = price
-  command.username = username
+  order.totalPrice = price
+  order.username = username
 
   let params : Params = {
-    TableName: process.env.COMMAND_TABLE,
+    TableName: process.env.ORDER_TABLE,
     Key: {
-      id: command.id
+      id: order.id
     },
     ExpressionAttributeValues: {},
     ExpressionAttributeNames: {},
@@ -55,12 +55,12 @@ async function updateCommand(command: any, username: String, groups: String[]) {
     ReturnValues: "UPDATED_NEW"
   };
   let prefix = "set ";
-  let attributes = Object.keys(command);
+  let attributes = Object.keys(order);
   for (let i=0; i<attributes.length; i++) {
     let attribute = attributes[i];
     if (attribute !== "id") {
       params["UpdateExpression"] += prefix + "#" + attribute + " = :" + attribute;
-      params["ExpressionAttributeValues"][":" + attribute] = command[attribute];
+      params["ExpressionAttributeValues"][":" + attribute] = order[attribute];
       params["ExpressionAttributeNames"]["#" + attribute] = attribute;
       prefix = ", ";
     }
@@ -68,11 +68,11 @@ async function updateCommand(command: any, username: String, groups: String[]) {
   console.log('params: ', params)
   try {
     await docClient.update(params).promise()
-    return command
+    return order
   } catch (err) {
     console.log('DynamoDB error: ', err)
     return null
   }
 }
 
-export default updateCommand;
+export default updateOrder;

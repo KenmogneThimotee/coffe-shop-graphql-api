@@ -24,6 +24,7 @@ import Order = require('./order/order');
 import createPayment from './payment/createPayment';
 import deletePayment from './payment/deletePayment';
 import getPaymentById from './payment/getPaymentById';
+import getPaymentByUsername from './payment/getPaymentByUsername';
 import listPayments from './payment/listPayments';
 import updatePayment from './payment/updatePayment';
 import Payment = require('./payment/payment');

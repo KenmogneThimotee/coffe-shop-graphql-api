@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-async function getPaymentById(username: String) {
+async function getPaymentByUsername(username: String) {
     const params = {
         TableName: process.env.PAYMENT_TABLE,
         FilterExpression: '#username = :username',
@@ -20,4 +20,4 @@ async function getPaymentById(username: String) {
     }
 }
 
-export default getPaymentById
+export default getPaymentByUsername

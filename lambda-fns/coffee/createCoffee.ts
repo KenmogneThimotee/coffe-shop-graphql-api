@@ -3,7 +3,8 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 import Coffee = require('./coffee');
 import getTypeById from '../type/getTypeById';
 import { callbackify } from 'util';
-const { v4: uuid } = require('uuid')
+//const { v4: uuid } = require('uuid')
+import { v4 as uuid } from 'uuid'
 
 async function createCoffee(coffee: Coffee, callback: any) {
     

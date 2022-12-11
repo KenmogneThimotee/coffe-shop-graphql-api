@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import Type = require('./type');
-const { v4: uuid } = require('uuid')
+import { v4 as uuid } from 'uuid'
 
 
 async function createType(type: Type, callback: any) {

@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import getOrderById from '../order/getOrderById';
 import Bill = require('./bill');
-const { v4: uuid } = require('uuid')
+import { v4 as uuid } from 'uuid'
 
 
 async function createBill(bill: Bill, username: String, callback: any) {

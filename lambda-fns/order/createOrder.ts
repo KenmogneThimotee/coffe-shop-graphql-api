@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import getCoffeeById from '../coffee/getCoffeeById';
 import Order = require('./order');
-const { v4: uuid } = require('uuid')
+import { v4 as uuid } from 'uuid'
 
 
 async function createOrder(order: Order, username: String, callback: any) {

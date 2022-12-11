@@ -2,11 +2,14 @@ const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import getCoffeeById from '../coffee/getCoffeeById';
 import Order = require('./order');
+const { v4: uuid } = require('uuid')
+
 
 async function createOrder(order: Order, username: String, callback: any) {
 
-   console.log("order", order)
-   let price = 0
+    order.id = uuid()
+    console.log("order", order)
+    let price = 0
     for(let coffeeOrder of order.coffee){
         console.log("coffe", coffeeOrder)
         try {

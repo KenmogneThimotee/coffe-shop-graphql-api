@@ -1,11 +1,11 @@
 type Type @aws_cognito_user_pools {
-    id: ID!
+    id: ID
     name: String!
     description: String!
 }
 
 input TypeInput {
-    id: ID!
+    id: ID
     name: String!
     description: String!
 }
@@ -17,7 +17,7 @@ input UpdateTypeInput {
 }
 
 type Coffee @aws_cognito_user_pools {
-    id: ID!
+    id: ID
     name: String!
     description: String!
     brand: String!
@@ -26,7 +26,7 @@ type Coffee @aws_cognito_user_pools {
 }
 
 input CoffeeInput {
-    id: ID!
+    id: ID
     name: String!
     description: String!
     brand: String!
@@ -59,14 +59,14 @@ input CaffeeOrderInput {
 
 
 type Order @aws_cognito_user_pools {
-    id: ID!
+    id: ID
     coffee: [CaffeeOrder]
     totalPrice: Float
     username: String!
 }
 
 input OrderInput {
-    id: ID!
+    id: ID
     coffee: [CaffeeOrderInput]!
 }
 
@@ -77,13 +77,13 @@ input UpdateOrderInput {
 
 
 type Bill @aws_cognito_user_pools {
-    id: ID!
+    id: ID
     command: String!
     username: String!
 }
 
 input BillInput {
-    id: ID!
+    id: ID
     command: String!
 }
 
@@ -93,13 +93,13 @@ input UpdateBillInput {
 }
 
 type Payment @aws_cognito_user_pools {
-    id: ID!
+    id: ID
     bill: String!
     username: String
 }
 
 input PaymentInput {
-    id: ID!
+    id: ID
     bill: String!
 }
 

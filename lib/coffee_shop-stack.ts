@@ -72,9 +72,16 @@ export class CoffeeShopStack extends cdk.Stack {
       value: this.region
     });
 
+    new cdk.CfnOutput(this, "UserPoolId", {
+      value: userPool.userPoolId
+    })
+
+    new cdk.CfnOutput(this, "UserPoolClientId", {
+      value: userPoolClient.userPoolClientId
+    })
     
     const coffeShopLambda = new lambda.Function(this, 'AppSyncCoffeeHandler', {
-      runtime: lambda.Runtime.NODEJS_12_X,
+      runtime: lambda.Runtime.NODEJS_16_X,
       handler: 'coffee-main.handler',
       code: lambda.Code.fromAsset('lambda-fns'),
       memorySize: 1024

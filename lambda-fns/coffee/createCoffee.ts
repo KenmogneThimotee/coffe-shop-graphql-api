@@ -3,8 +3,13 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 import Coffee = require('./coffee');
 import getTypeById from '../type/getTypeById';
 import { callbackify } from 'util';
+const { v4: uuid } = require('uuid')
 
 async function createCoffee(coffee: Coffee, callback: any) {
+    
+    
+    coffee.id = uuid()
+
     const params = {
         TableName: process.env.COFFEE_TABLE,
         Item: coffee

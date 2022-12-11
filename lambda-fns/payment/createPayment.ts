@@ -2,9 +2,12 @@ const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import { callbackify } from 'util';
 import Payment = require('./payment');
+const { v4: uuid } = require('uuid')
+
 
 async function createPayment(payment: Payment, username: String, callback: any) {
 
+    payment.id = uuid()
     const params = {
         TableName: process.env.PAYMENT_TABLE,
         Item: payment

@@ -1,4 +1,4 @@
-type Type {
+type Type  {
     id: ID!
     name: String!
     description: String!
@@ -16,7 +16,7 @@ input UpdateTypeInput {
     description: String!
 }
 
-type Coffee {
+type Coffee  {
     id: ID!
     name: String!
     description: String!
@@ -43,39 +43,40 @@ input UpdateCoffeeInput {
     type: String!
 }
 
-type CaffeeCommand {
+type CaffeeOrder   {
 
     coffee: String!
     quantity: Int!
 
 }
 
-input CaffeeCommandInput {
+input CaffeeOrderInput {
 
     coffee: String!
     quantity: Int!
 
 }
 
-type Command {
+
+type Order  {
     id: ID!
-    coffee: [CaffeeCommand]
+    coffee: [CaffeeOrder]
     totalPrice: Float
     username: String!
 }
 
-input CommandInput {
+input OrderInput {
     id: ID!
-    coffee: [CaffeeCommandInput]!
+    coffee: [CaffeeOrderInput]!
 }
 
-input UpdateCommandInput {
+input UpdateOrderInput {
     id: ID!
-    coffee: [CaffeeCommandInput!]!
+    coffee: [CaffeeOrderInput!]!
 }
 
 
-type Bill {
+type Bill  {
     id: ID!
     command: String!
     username: String!
@@ -91,7 +92,7 @@ input UpdateBillInput {
     command: String!
 }
 
-type Payment {
+type Payment  {
     id: ID!
     bill: String!
     username: String
@@ -114,10 +115,13 @@ type Query  {
   listCoffees: [Coffee]
   
 
-  getOrderById(commandId: String!): Command
+  getOrderById(orderId: String!): Order
   
 
-  listOrders: [Command]
+  getOrderByUsername: [Order]
+  
+
+  listOrders: [Order]
   
 
   getTypeById(typeId: String!): Type
@@ -129,10 +133,16 @@ type Query  {
   getBillById(billId: String!): Bill
   
 
+  getBillByUsername: [Bill]
+  
+
   listBills: [Bill]
   
 
   getPaymentById(paymentId: String!): Payment
+  
+
+  getPaymentByUsername: [Payment]
   
 
   listPayments: [Payment]
@@ -160,13 +170,13 @@ type Mutation {
   deleteType(typeId: String!): String
   
 
-  createCommand(command: CommandInput!): Command
+  createOrder(order: OrderInput!): Order
   
 
-  updateCommand(command: UpdateCommandInput!): Command
+  updateOrder(order: UpdateOrderInput!): Order
   
 
-  deleteCommand(commandId: String!): String
+  deleteOrder(orderId: String!): String
   
 
   createBill(bill: BillInput!): Bill

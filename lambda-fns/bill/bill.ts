@@ -3,7 +3,7 @@ interface Bill {
     id: String;
     totalPrice: Number;
     username: String;
-    command: String;
+    order: String;
 }
 
 export = Bill

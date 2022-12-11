@@ -18,6 +18,8 @@ import {
 import createOrderInfra from './order/main';
 import createPaymentInfra from './payment/main';
 import createTypeInfra from './typeOfCoffee/main';
+import createBill from '../lambda-fns/bill/createBill';
+import createBillInfra from './bill/main';
 
 
 export class CoffeeShopStack extends cdk.Stack {
@@ -51,17 +53,11 @@ export class CoffeeShopStack extends cdk.Stack {
       schema: Schema.fromAsset('graphql/schema.graphql'),
       authorizationConfig: {
         defaultAuthorization: {
-          authorizationType: AuthorizationType.API_KEY,
-          apiKeyConfig: {
-            expires: cdk.Expiration.after(cdk.Duration.days(365))
-          }
-        },
-        additionalAuthorizationModes: [{
           authorizationType: AuthorizationType.USER_POOL,
           userPoolConfig: {
             userPool
           }
-        }]
+        }
       },
       xrayEnabled: true,
     });
@@ -69,11 +65,6 @@ export class CoffeeShopStack extends cdk.Stack {
     // Prints out the AppSync GraphQL endpoint to the terminal
     new cdk.CfnOutput(this, "GraphQLAPIURL", {
       value: api.graphqlUrl
-    });
-  
-    // Prints out the AppSync GraphQL API key to the terminal
-    new cdk.CfnOutput(this, "GraphQLAPIKey", {
-      value: api.apiKey || ''
     });
 
     // Prints out the stack region to the terminal
@@ -96,5 +87,6 @@ export class CoffeeShopStack extends cdk.Stack {
     createOrderInfra(this, lambdaDs, coffeShopLambda)
     createPaymentInfra(this, lambdaDs, coffeShopLambda)
     createTypeInfra(this, lambdaDs, coffeShopLambda)
+    createBillInfra(this, lambdaDs, coffeShopLambda)
   }
 }

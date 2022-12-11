@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-async function deleteCoffee(coffeeId: String) {
+async function deleteCoffee(coffeeId: String, callback: any) {
     const params = {
         TableName: process.env.COFFEE_TABLE,
         Key: {
@@ -13,6 +13,7 @@ async function deleteCoffee(coffeeId: String) {
         return coffeeId
     } catch (err) {
         console.log('DynamoDB error: ', err)
+        callback("Internal server error")
         return null
     }
 }

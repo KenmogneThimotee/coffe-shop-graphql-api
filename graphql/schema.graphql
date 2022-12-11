@@ -57,23 +57,10 @@ input CaffeeOrderInput {
 
 }
 
-type CaffeeOrderOutput {
-
-    coffee: String!
-    quantity: Int!
-
-}
 
 type Order @aws_cognito_user_pools {
     id: ID!
     coffee: [CaffeeOrder]
-    totalPrice: Float
-    username: String!
-}
-
-type OrderOutput {
-    id: ID!
-    coffee: [CaffeeOrderOutput]
     totalPrice: Float
     username: String!
 }
@@ -131,7 +118,7 @@ type Query  {
   getOrderById(orderId: String!): Order
   @aws_cognito_user_pools
 
-  getOrderByUsername(username: String!): [Order]
+  getOrderByUsername: [Order]
   @aws_cognito_user_pools
 
   listOrders: [Order]
@@ -146,7 +133,7 @@ type Query  {
   getBillById(billId: String!): Bill
   @aws_cognito_user_pools
 
-  getBillByUsername(username: String!): Bill
+  getBillByUsername: [Bill]
   @aws_cognito_user_pools
 
   listBills: [Bill]
@@ -155,7 +142,7 @@ type Query  {
   getPaymentById(paymentId: String!): Payment
   @aws_cognito_user_pools
 
-  getPaymentByUsername(username: String!): Payment
+  getPaymentByUsername: [Payment]
   @aws_cognito_user_pools
 
   listPayments: [Payment]

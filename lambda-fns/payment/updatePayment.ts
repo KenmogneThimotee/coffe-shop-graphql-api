@@ -10,7 +10,7 @@ interface Params {
   ReturnValues: string
 }
 
-async function updatePayment(payment: any) {
+async function updatePayment(payment: any, callback: any) {
   let params : Params = {
     TableName: process.env.PAYMENT_TABLE,
     Key: {
@@ -38,6 +38,7 @@ async function updatePayment(payment: any) {
     return payment
   } catch (err) {
     console.log('DynamoDB error: ', err)
+    callback("Internal server error")
     return null
   }
 }

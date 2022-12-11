@@ -1,8 +1,9 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
+import { callbackify } from "util";
 import getOrderById from "./getOrderById";
 
-async function deleteOrder(orderId: String, username: String, groups: String[]) {
+async function deleteOrder(orderId: String, username: String, groups: String[], callback: any) {
 
     try {
         const item = await getOrderById(orderId, username, groups)
@@ -24,6 +25,7 @@ async function deleteOrder(orderId: String, username: String, groups: String[]) 
         return orderId
     } catch (err) {
         console.log('DynamoDB error: ', err)
+        callback("Internal server error")
         return null
     }
 }

@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-async function deletePayment(paymentId: String) {
+async function deletePayment(paymentId: String, callback: any) {
     const params = {
         TableName: process.env.PAYMENT_TABLE,
         Key: {
@@ -13,6 +13,7 @@ async function deletePayment(paymentId: String) {
         return paymentId
     } catch (err) {
         console.log('DynamoDB error: ', err)
+        callback("Internal server error")
         return null
     }
 }

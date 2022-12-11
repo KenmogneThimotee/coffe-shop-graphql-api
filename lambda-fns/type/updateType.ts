@@ -10,7 +10,7 @@ interface Params {
   ReturnValues: string
 }
 
-async function updateType(type: any) {
+async function updateType(type: any, callback: any) {
   let params : Params = {
     TableName: process.env.TYPE_TABLE,
     Key: {
@@ -38,6 +38,7 @@ async function updateType(type: any) {
     return type
   } catch (err) {
     console.log('DynamoDB error: ', err)
+    callback("Internal server error")
     return null
   }
 }

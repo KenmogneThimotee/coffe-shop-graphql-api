@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-async function getOrderByUsername(username: String) {
+async function getOrderByUsername(username: String, callback: any) {
     const params = {
         TableName: process.env.ORDER_TABLE,
         FilterExpression: '#username = :username',
@@ -20,6 +20,7 @@ async function getOrderByUsername(username: String) {
         
     } catch (err) {
         console.log('DynamoDB error: ', err)
+        callback("Internal server error")
     }
 }
 

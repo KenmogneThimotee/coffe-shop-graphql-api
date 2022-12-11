@@ -1,8 +1,9 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
+import { callbackify } from 'util';
 import Payment = require('./payment');
 
-async function createPayment(payment: Payment, username: String) {
+async function createPayment(payment: Payment, username: String, callback: any) {
 
     const params = {
         TableName: process.env.PAYMENT_TABLE,
@@ -18,6 +19,7 @@ async function createPayment(payment: Payment, username: String) {
         if(Item === undefined) return null
     } catch (err) {
         console.log('DynamoDB error: ', err)
+        callback("Internal server error")
         return null
     }
 

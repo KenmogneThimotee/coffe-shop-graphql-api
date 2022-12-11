@@ -3,7 +3,7 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 import getCoffeeById from '../coffee/getCoffeeById';
 import Order = require('./order');
 
-async function createOrder(order: Order, username: String) {
+async function createOrder(order: Order, username: String, callback: any) {
 
    console.log("order", order)
    let price = 0
@@ -26,8 +26,6 @@ async function createOrder(order: Order, username: String) {
     order.totalPrice = price
     order.username = username
    
-    console.log("end of user")
-    console.log("egg", order)
     const params = {
         TableName: process.env.ORDER_TABLE,
         Item: order
@@ -37,7 +35,8 @@ async function createOrder(order: Order, username: String) {
         return order;
     } catch (err) {
         console.log('DynamoDB error: ', err);
-        return null;
+        callback("Internal server error")
+        return null
     }
 }
 

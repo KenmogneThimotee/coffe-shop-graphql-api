@@ -3,13 +3,13 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 import getOrderById from '../order/getOrderById';
 import Bill = require('./bill');
 
-async function createBill(bill: Bill, username: String) {
+async function createBill(bill: Bill, username: String, callback: any) {
 
     bill.username = username
 
-    const command = await getOrderById(bill.command, username, ['admin'])
-    if(command === undefined){
-        return null
+    const order = await getOrderById(bill.order, username, ['admin'])
+    if(order === undefined){
+        callback("This order doesn't exist")
     }
 
     const params = {
@@ -20,7 +20,7 @@ async function createBill(bill: Bill, username: String) {
         await docClient.put(params).promise();
         return bill;
     } catch (err) {
-        console.log('DynamoDB error: ', err);
+        callback("Internal server error")
         return null;
     }
 }

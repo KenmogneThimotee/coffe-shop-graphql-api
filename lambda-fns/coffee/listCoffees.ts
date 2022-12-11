@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-async function listCoffees() {
+async function listCoffees(callback: any) {
     const params = {
         TableName: process.env.COFFEE_TABLE,
     }
@@ -10,6 +10,7 @@ async function listCoffees() {
         return data.Items
     } catch (err) {
         console.log('DynamoDB error: ', err)
+        callback("Internal server error")
         return null
     }
 }

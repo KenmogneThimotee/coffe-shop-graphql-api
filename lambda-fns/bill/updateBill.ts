@@ -1,3 +1,4 @@
+import { callbackify } from "util";
 import getBillById from "./getBillById";
 
 const AWS = require('aws-sdk');
@@ -12,7 +13,7 @@ interface Params {
   ReturnValues: string
 }
 
-async function updateBill(bill: any, username: String, groups: String[]) {
+async function updateBill(bill: any, username: String, groups: String[], callback: any) {
   
   try {
     const item = await getBillById(bill.id, username, groups)
@@ -50,6 +51,7 @@ async function updateBill(bill: any, username: String, groups: String[]) {
     return bill
   } catch (err) {
     console.log('DynamoDB error: ', err)
+    callback("Internal server error")
     return null
   }
 }

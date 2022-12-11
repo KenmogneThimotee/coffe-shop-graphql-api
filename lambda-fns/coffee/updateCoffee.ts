@@ -10,11 +10,11 @@ interface Params {
   ReturnValues: string
 }
 
-async function updateCoffee(note: any) {
+async function updateCoffee(coffee: any, callback: any) {
   let params : Params = {
     TableName: process.env.COFFEE_TABLE,
     Key: {
-      id: note.id
+      id: coffee.id
     },
     ExpressionAttributeValues: {},
     ExpressionAttributeNames: {},
@@ -22,12 +22,12 @@ async function updateCoffee(note: any) {
     ReturnValues: "UPDATED_NEW"
   };
   let prefix = "set ";
-  let attributes = Object.keys(note);
+  let attributes = Object.keys(coffee);
   for (let i=0; i<attributes.length; i++) {
     let attribute = attributes[i];
     if (attribute !== "id") {
       params["UpdateExpression"] += prefix + "#" + attribute + " = :" + attribute;
-      params["ExpressionAttributeValues"][":" + attribute] = note[attribute];
+      params["ExpressionAttributeValues"][":" + attribute] = coffee[attribute];
       params["ExpressionAttributeNames"]["#" + attribute] = attribute;
       prefix = ", ";
     }
@@ -35,10 +35,10 @@ async function updateCoffee(note: any) {
   console.log('params: ', params)
   try {
     await docClient.update(params).promise()
-    return note
+    return coffee
   } catch (err) {
     console.log('DynamoDB error: ', err)
-    return null
+    callback("Internal server error")
   }
 }
 

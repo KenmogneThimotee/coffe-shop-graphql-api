@@ -68,44 +68,44 @@ type AppSyncEvent = {
   }
 }
 
-exports.handler = async (event:AppSyncEvent, context: any) => {
+exports.handler = async (event:AppSyncEvent, context: any, callback: any) => {
     console.log(context)
     console.log(event)
     switch (event.info.fieldName) {
         case "getCoffeeById":
             return await getCoffeeById(event.arguments.coffeeId);
         case "createCoffee":
-            return await createCoffee(event.arguments.coffee);
+            return await createCoffee(event.arguments.coffee, callback);
         case "listCoffees":
-            return await listCoffees();
+            return await listCoffees(callback);
         case "deleteCoffee":
-            return await deleteCoffee(event.arguments.coffeeId);
+            return await deleteCoffee(event.arguments.coffeeId, callback);
         case "updateCoffee":
-            return await updateCoffee(event.arguments.coffee);
+            return await updateCoffee(event.arguments.coffee, callback);
         
         case "getBillById":
             return await getBillById(event.arguments.billId, event.identity.username, event.identity.groups);
         case "getBillByUsername":
             return await getBillByUsername(event.identity.username);
         case "createBill":
-            return await createBill(event.arguments.bill, event.identity.username);
+            return await createBill(event.arguments.bill, event.identity.username, callback);
         case "listBills":
             return await listBills();
         case "deleteBill":
-            return await deleteBill(event.arguments.billId, event.identity.username, event.identity.groups);
+            return await deleteBill(event.arguments.billId, event.identity.username, event.identity.groups, callback);
         case "updateBill":
-            return await updateBill(event.arguments.bill, event.identity.username, event.identity.groups);
+            return await updateBill(event.arguments.bill, event.identity.username, event.identity.groups, callback);
 
         case "getOrderById":
             return await getOrderById(event.arguments.orderId, event.identity.username, event.identity.groups);
         case "getOrderByUsername":
-            return await getOrderByUsername(event.identity.username);
+            return await getOrderByUsername(event.identity.username, callback);
         case "createOrder":
-            return await createOrder(event.arguments.order, event.identity.username);
+            return await createOrder(event.arguments.order, event.identity.username, callback);
         case "listOrders":
             return await listOrders();
         case "deleteOrder":
-            return await deleteOrder(event.arguments.orderId, event.identity.username, event.identity.groups);
+            return await deleteOrder(event.arguments.orderId, event.identity.username, event.identity.groups, callback);
         case "updateOrder":
             return await updateOrder(event.arguments.order, event.identity.username, event.identity.groups);
 
@@ -113,26 +113,26 @@ exports.handler = async (event:AppSyncEvent, context: any) => {
         case "getPaymentById":
             return await getPaymentById(event.arguments.paymentId, event.identity.username, event.identity.groups);
         case "getPaymentByUsername":
-            return await getPaymentByUsername(event.identity.username);   
+            return await getPaymentByUsername(event.identity.username, callback);   
         case "createPayment":
-            return await createPayment(event.arguments.payment, event.identity.username);
+            return await createPayment(event.arguments.payment, event.identity.username, callback);
         case "listPayments":
             return await listPayments();
         case "deletePayment":
-            return await deletePayment(event.arguments.paymentId);
+            return await deletePayment(event.arguments.paymentId, callback);
         case "updatePayment":
-            return await updatePayment(event.arguments.payment);
+            return await updatePayment(event.arguments.payment, callback);
         
         case "getTypeById":
             return await getTypeById(event.arguments.typeId);
         case "createType":
-            return await createType(event.arguments.type);
+            return await createType(event.arguments.type, callback);
         case "listTypes":
             return await listTypes();
         case "deleteType":
-            return await deleteType(event.arguments.typeId);
+            return await deleteType(event.arguments.typeId, callback);
         case "updateType":
-            return await updateType(event.arguments.type);
+            return await updateType(event.arguments.type, callback);
 
         default:
             return null;

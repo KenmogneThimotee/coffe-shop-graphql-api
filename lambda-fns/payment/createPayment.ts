@@ -19,7 +19,10 @@ async function createPayment(payment: Payment, username: String, callback: any) 
     }
     try {
         const { Item } = await docClient.get(paramsBill).promise()
-        if(Item === undefined) return null
+        if(Item === undefined){
+            callback("This bill doesn't exist")
+            return null
+        } 
     } catch (err) {
         console.log('DynamoDB error: ', err)
         callback("Internal server error")

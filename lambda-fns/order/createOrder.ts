@@ -22,6 +22,7 @@ async function createOrder(order: Order, username: String, callback: any) {
             }
         } catch (error) {
             console.log("error", error)
+            return null
         }
 
     }

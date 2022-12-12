@@ -23,6 +23,7 @@ async function createCoffee(coffee: Coffee, callback: any) {
         if(Item === undefined){
 
          callback("This type doesn't exist")
+         return null
         }
     } catch (err) {
         console.log('DynamoDB error: ', err)

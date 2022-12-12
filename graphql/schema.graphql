@@ -75,17 +75,17 @@ input UpdateOrderInput {
 
 type Bill @aws_cognito_user_pools {
     id: ID
-    command: String!
+    order: String!
     username: String!
 }
 
 input BillInput {
-    command: String!
+    order: String!
 }
 
 input UpdateBillInput {
     id: ID!
-    command: String!
+    order: String!
 }
 
 type Payment @aws_cognito_user_pools {

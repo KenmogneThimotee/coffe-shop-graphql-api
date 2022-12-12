@@ -16,6 +16,7 @@ async function createBill(bill: Bill, username: String, callback: any) {
     const order = await getOrderById(bill.order, username, ['admin'])
     if(order === undefined){
         callback("This order doesn't exist")
+        return null
     }
 
     const params = {

@@ -2,11 +2,8 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 //import * as cdk from '@aws-cdk/core';
-import * as appsync from 'aws-cdk-lib/aws-appsync';
-import * as ddb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as cognito from 'aws-cdk-lib/aws-cognito'
-import { AccountRecovery, UserPool, UserPoolClient, VerificationEmailStyle } from '@aws-cdk/aws-cognito'
 import createCoffeInfra from './coffee/main'
 
 import {
@@ -18,7 +15,6 @@ import {
 import createOrderInfra from './order/main';
 import createPaymentInfra from './payment/main';
 import createTypeInfra from './typeOfCoffee/main';
-import createBill from '../lambda-fns/bill/createBill';
 import createBillInfra from './bill/main';
 
 

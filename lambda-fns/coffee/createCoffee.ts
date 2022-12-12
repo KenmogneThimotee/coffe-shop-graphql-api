@@ -1,15 +1,12 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import Coffee = require('./coffee');
-import getTypeById from '../type/getTypeById';
-import { callbackify } from 'util';
-//const { v4: uuid } = require('uuid')
-import { v4 as uuid } from 'uuid'
+import * as crypto from 'crypto';
 
 async function createCoffee(coffee: Coffee, callback: any) {
     
     
-    coffee.id = uuid()
+    coffee.id = crypto.randomBytes(4).toString("hex");
 
     const params = {
         TableName: process.env.COFFEE_TABLE,

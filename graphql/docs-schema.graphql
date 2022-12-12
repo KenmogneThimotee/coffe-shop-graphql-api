@@ -1,11 +1,10 @@
 type Type  {
-    id: ID!
+    id: ID
     name: String!
     description: String!
 }
 
 input TypeInput {
-    id: ID!
     name: String!
     description: String!
 }
@@ -17,7 +16,7 @@ input UpdateTypeInput {
 }
 
 type Coffee  {
-    id: ID!
+    id: ID
     name: String!
     description: String!
     brand: String!
@@ -26,7 +25,6 @@ type Coffee  {
 }
 
 input CoffeeInput {
-    id: ID!
     name: String!
     description: String!
     brand: String!
@@ -59,14 +57,13 @@ input CaffeeOrderInput {
 
 
 type Order  {
-    id: ID!
+    id: ID
     coffee: [CaffeeOrder]
     totalPrice: Float
     username: String!
 }
 
 input OrderInput {
-    id: ID!
     coffee: [CaffeeOrderInput]!
 }
 
@@ -77,13 +74,12 @@ input UpdateOrderInput {
 
 
 type Bill  {
-    id: ID!
+    id: ID
     command: String!
     username: String!
 }
 
 input BillInput {
-    id: ID!
     command: String!
 }
 
@@ -93,13 +89,12 @@ input UpdateBillInput {
 }
 
 type Payment  {
-    id: ID!
+    id: ID
     bill: String!
     username: String
 }
 
 input PaymentInput {
-    id: ID!
     bill: String!
 }
 

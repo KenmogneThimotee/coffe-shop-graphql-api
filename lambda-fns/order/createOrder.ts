@@ -2,12 +2,12 @@ const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import getCoffeeById from '../coffee/getCoffeeById';
 import Order = require('./order');
-import { v4 as uuid } from 'uuid'
+import * as crypto from 'crypto';
 
 
 async function createOrder(order: Order, username: String, callback: any) {
 
-    order.id = uuid()
+    order.id = crypto.randomBytes(4).toString("hex");
     console.log("order", order)
     let price = 0
     for(let coffeeOrder of order.coffee){

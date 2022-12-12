@@ -2,13 +2,13 @@ const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import getOrderById from '../order/getOrderById';
 import Bill = require('./bill');
-import { v4 as uuid } from 'uuid'
+import * as crypto from 'crypto';
 
 
 async function createBill(bill: Bill, username: String, callback: any) {
 
    
-    bill.id = uuid()
+    bill.id = crypto.randomBytes(4).toString("hex");
     
 
     bill.username = username

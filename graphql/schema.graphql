@@ -5,7 +5,6 @@ type Type @aws_cognito_user_pools {
 }
 
 input TypeInput {
-    id: ID
     name: String!
     description: String!
 }
@@ -26,7 +25,6 @@ type Coffee @aws_cognito_user_pools {
 }
 
 input CoffeeInput {
-    id: ID
     name: String!
     description: String!
     brand: String!
@@ -66,7 +64,6 @@ type Order @aws_cognito_user_pools {
 }
 
 input OrderInput {
-    id: ID
     coffee: [CaffeeOrderInput]!
 }
 
@@ -83,7 +80,6 @@ type Bill @aws_cognito_user_pools {
 }
 
 input BillInput {
-    id: ID
     command: String!
 }
 
@@ -99,7 +95,6 @@ type Payment @aws_cognito_user_pools {
 }
 
 input PaymentInput {
-    id: ID
     bill: String!
 }
 

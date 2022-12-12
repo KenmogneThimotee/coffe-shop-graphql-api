@@ -16,6 +16,8 @@ jobs:
           aws-region: 'us-east-1'
       - name: Update npm
         run: npm i -g npm
+      - name: clean cache
+        run: npm cache clean --force
       - name: Install cdk
         run: npm install -g aws-cdk@2.54.0
       - name: Install dependencies

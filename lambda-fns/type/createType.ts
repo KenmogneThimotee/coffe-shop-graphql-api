@@ -1,12 +1,12 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 import Type = require('./type');
-import { v4 as uuid } from 'uuid'
+import * as crypto from 'crypto';
 
 
 async function createType(type: Type, callback: any) {
     
-    type.id = uuid()
+    type.id = crypto.randomBytes(4).toString("hex");
     const params = {
         TableName: process.env.TYPE_TABLE,
         Item: type

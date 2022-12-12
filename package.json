@@ -16,7 +16,6 @@
     "@types/node": "10.17.27",
     "@types/prettier": "2.6.0",
     "@types/uuid": "^9.0.0",
-    "aws-cdk": "2.53.0",
     "jest": "^27.5.1",
     "markdown-notes-tree": "^1.12.0",
     "ts-jest": "^27.1.4",
@@ -24,13 +23,14 @@
     "typescript": "~3.9.7"
   },
   "dependencies": {
-    "@aws-cdk/aws-appsync": "^1.181.1",
+    "@aws-cdk/aws-appsync": "^1.182.0",
     "@aws-cdk/aws-appsync-alpha": "^2.54.0-alpha.0",
-    "@aws-cdk/aws-cognito": "^1.181.1",
-    "@aws-cdk/aws-dynamodb": "^1.181.1",
-    "@aws-cdk/aws-lambda": "^1.181.1",
+    "@aws-cdk/aws-cognito": "^1.182.0",
+    "@aws-cdk/aws-dynamodb": "^1.182.0",
+    "@aws-cdk/aws-lambda": "^1.182.0",
     "aws-cdk-lib": "^2.54.0",
     "constructs": "^10.0.0",
+    "crypto": "^1.0.1",
     "source-map-support": "^0.5.21"
   }
 }

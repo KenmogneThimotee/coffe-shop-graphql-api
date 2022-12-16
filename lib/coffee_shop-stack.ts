@@ -76,20 +76,54 @@ export class CoffeeShopStack extends cdk.Stack {
       value: userPoolClient.userPoolClientId
     })
     
-    const coffeShopLambda = new lambda.Function(this, 'AppSyncCoffeeHandler', {
+    const coffeLambda = new lambda.Function(this, 'AppSyncCoffeeHandler', {
       runtime: lambda.Runtime.NODEJS_16_X,
-      handler: 'coffee-main.handler',
-      code: lambda.Code.fromAsset('lambda-fns'),
+      handler: 'main.handler',
+      code: lambda.Code.fromAsset('lambda-fns/coffee'),
+      memorySize: 1024
+    });
+
+    const BillLambda = new lambda.Function(this, 'AppSyncBillHandler', {
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'main.handler',
+      code: lambda.Code.fromAsset('lambda-fns/bill'),
+      memorySize: 1024
+    });
+
+    const OrderLambda = new lambda.Function(this, 'AppSyncOrderHandler', {
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'main.handler',
+      code: lambda.Code.fromAsset('lambda-fns/order'),
+      memorySize: 1024
+    });
+
+    const PaymentLambda = new lambda.Function(this, 'AppSyncPaymentHandler', {
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'main.handler',
+      code: lambda.Code.fromAsset('lambda-fns/payment'),
+      memorySize: 1024
+    });
+
+    const TypeLambda = new lambda.Function(this, 'AppSyncTypeHandler', {
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'main.handler',
+      code: lambda.Code.fromAsset('lambda-fns/type'),
       memorySize: 1024
     });
 
     // Set the new Lambda function as a data source for the AppSync API
-    const lambdaDs = api.addLambdaDataSource('lambdaCoffeeDatasource', coffeShopLambda)
-    
-    createCoffeInfra(this, lambdaDs, coffeShopLambda)
-    createOrderInfra(this, lambdaDs, coffeShopLambda)
-    createPaymentInfra(this, lambdaDs, coffeShopLambda)
-    createTypeInfra(this, lambdaDs, coffeShopLambda)
-    createBillInfra(this, lambdaDs, coffeShopLambda)
+    const lambdaCoffeeDs = api.addLambdaDataSource('lambdaCoffeeDatasource', coffeLambda)
+    const lambdaBillDs = api.addLambdaDataSource('lambdaBillDatasource', BillLambda)
+    const lambdaOrderDs = api.addLambdaDataSource('lambdaOrderDatasource', OrderLambda)
+    const lambdaPaymentDs = api.addLambdaDataSource('lambdaPaymentDatasource', PaymentLambda)
+    const lambdaTypeDs = api.addLambdaDataSource('lambdaTypeDatasource', TypeLambda)
+
+
+
+    createCoffeInfra(this, lambdaCoffeeDs, coffeLambda)
+    createOrderInfra(this, lambdaOrderDs, OrderLambda)
+    createPaymentInfra(this, lambdaOrderDs, PaymentLambda)
+    createTypeInfra(this, lambdaTypeDs, TypeLambda)
+    createBillInfra(this, lambdaBillDs, BillLambda)
   }
 }

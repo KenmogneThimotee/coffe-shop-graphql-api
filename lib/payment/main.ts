@@ -1,9 +1,20 @@
-import { LambdaDataSource } from "@aws-cdk/aws-appsync-alpha";
+import { GraphqlApi, LambdaDataSource } from "@aws-cdk/aws-appsync-alpha";
 import * as cdk from 'aws-cdk-lib';
 import * as ddb from 'aws-cdk-lib/aws-dynamodb';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+
+function createPaymentInfra(construct: cdk.Stack, api: GraphqlApi){
+
+    const lambdaFunction = new lambda.Function(construct, 'AppSyncPaymentHandler', {
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'main.handler',
+      code: lambda.Code.fromAsset('lambda-fns/payment'),
+      memorySize: 1024
+    });
+
+    const lambdaDs = api.addLambdaDataSource('lambdaPaymentDatasource', lambdaFunction)
 
 
-function createPaymentInfra(construct: cdk.Stack, lambdaDs: LambdaDataSource, lambdaFunction: cdk.aws_lambda.Function){
 
     lambdaDs.createResolver({
         typeName: "Query",
